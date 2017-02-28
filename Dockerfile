@@ -26,9 +26,15 @@ RUN curl -L https://apertium.projectjj.com/apt/apertium-packaging.public.gpg \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf $tmp
 
+RUN mkdir /usr/local/view/db \
+ && chown -R view:view /usr/local/view/db
+
 RUN groupadd -g 1003 view \
  && useradd -u 1003 -g 1003 view \
  && chown -R view:view /usr/local/tomcat
+
+VOLUME /usr/local/tomcat/webapps
+VOLUME /usr/local/view/db
 
 USER view
 CMD ["catalina.sh", "run"]
