@@ -26,7 +26,7 @@ RUN curl -L https://apertium.projectjj.com/apt/apertium-packaging.public.gpg \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf $tmp
 
-RUN mkdir /usr/local/view/db \
+RUN mkdir -p /usr/local/view/db \
  && chown -R view:view /usr/local/view/db
 
 RUN groupadd -g 1003 view \
