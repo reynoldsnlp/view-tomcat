@@ -2,7 +2,7 @@ FROM tomcat:8.5-jre8
 
 COPY conf /usr/local/tomcat/conf/
 
-ENV VISLCG3_REVISION="12146"
+ENV VISLCG3_REVISION="12191"
 ENV runtime_dependencies "libgoogle-perftools4"
 ENV build_dependencies "subversion build-essential cmake git libgoogle-perftools-dev libboost-dev libicu-dev"
 
