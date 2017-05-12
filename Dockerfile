@@ -2,16 +2,11 @@ FROM tomcat:8.5-jre8
 
 COPY conf /usr/local/tomcat/conf/
 
-ENV runtime_dependencies "cg3"
-ENV build_dependencies "git"
+ENV VISLCG3_REVISION="12146"
+ENV runtime_dependencies "libgoogle-perftools4"
+ENV build_dependencies "subversion build-essential cmake git libgoogle-perftools-dev libboost-dev libicu-dev"
 
-RUN curl -L https://apertium.projectjj.com/apt/apertium-packaging.public.gpg \
-  > /etc/apt/trusted.gpg.d/apertium.gpg \
- && curl -L https://apertium.projectjj.com/apt/apertium.pref \
-  > /etc/apt/preferences.d/apertium.pref \
- && echo "deb http://apertium.projectjj.com/apt/nightly jessie main" \
-  > /etc/apt/sources.list.d/apertium-nightly.list \
- && apt-get -qy update \
+RUN apt-get -qy update \
  && apt-get install -y $runtime_dependencies $build_dependencies \
  && mkdir -p /usr/local/werti \
  && mkdir -p /usr/local/werti/resources \
@@ -21,10 +16,18 @@ RUN curl -L https://apertium.projectjj.com/apt/apertium-packaging.public.gpg \
  && mv pdtb-parser/lib/morph/morphg /usr/local/bin \
  && mv pdtb-parser/lib/morph/verbstem.list /usr/local/werti/resources \
  && rm -rf pdtb-parser \
+ && cd $tmp \
+ && svn co http://beta.visl.sdu.dk/svn/visl/tools/vislcg3/trunk@$VISLCG3_REVISION vislcg3 \
+ && cd vislcg3 \
+ && ./cmake.sh \
+ && make -j5 \
+ && make install \
  && apt-get remove -y $build_dependencies \
  && apt-get autoremove -y \
  && rm -rf /var/lib/apt/lists/* \
- && rm -rf $tmp
+ && rm -rf $tmp \
+ && echo "/usr/local/lib/x86_64-linux-gnu/" > /etc/ld.so.conf.d/local.conf \
+ && ldconfig
 
 RUN groupadd -g 1003 view \
  && useradd -u 1003 -g 1003 view \
