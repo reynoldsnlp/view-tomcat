@@ -1,7 +1,5 @@
 FROM tomcat:8.5-jre8
 
-COPY conf /usr/local/tomcat/conf/
-
 ENV VISLCG3_REVISION="12191"
 ENV runtime_dependencies "libgoogle-perftools4"
 ENV build_dependencies "subversion build-essential cmake git libgoogle-perftools-dev libboost-dev libicu-dev"
@@ -29,12 +27,12 @@ RUN apt-get -qy update \
  && echo "/usr/local/lib/x86_64-linux-gnu/" > /etc/ld.so.conf.d/local.conf \
  && ldconfig
 
+COPY conf /usr/local/tomcat/conf/
+
 RUN groupadd -g 1003 view \
  && useradd -u 1003 -g 1003 view \
- && chown -R view:view /usr/local/tomcat
-
-RUN mkdir -p /usr/local/view/db \
- && chown -R view:view /usr/local/view/db
+ && mkdir -p /usr/local/view/db \
+ && chown -R view:view /usr/local/tomcat /usr/local/view/db
 
 VOLUME /usr/local/tomcat/webapps
 VOLUME /usr/local/view/db
