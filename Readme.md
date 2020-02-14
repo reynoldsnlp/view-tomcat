@@ -1,5 +1,3 @@
 # Tomcat VIEW
 
-Docker container for VIEW.
-
-
+Base docker image for [VIEW](https://gitlab.com/view/core).
