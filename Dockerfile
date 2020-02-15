@@ -1,8 +1,8 @@
 FROM tomcat:8.5-jre8
 
 ENV VISLCG3_REVISION="12191"
-ENV runtime_dependencies "build-essential hfst libgoogle-perftools4"
-ENV build_dependencies "subversion cmake git libgoogle-perftools-dev libboost-dev libicu-dev"
+ENV runtime_dependencies "hfst libgoogle-perftools4"
+ENV build_dependencies "build-essential subversion cmake git libgoogle-perftools-dev libboost-dev libicu-dev"
 
 RUN apt-get -qy update \
  && apt-get install -y $runtime_dependencies $build_dependencies \
