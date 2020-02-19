@@ -1,7 +1,7 @@
 FROM tomcat:8.5-jre8
 
 ENV VISLCG3_REVISION="12191"
-ENV runtime_dependencies "hfst less libgoogle-perftools4 vim-tiny"
+ENV runtime_dependencies "hfst htop less libgoogle-perftools4 vim-tiny"
 ENV build_dependencies "build-essential subversion cmake git libgoogle-perftools-dev libboost-dev libicu-dev"
 
 RUN apt-get -qy update \
